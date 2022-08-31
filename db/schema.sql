@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS rms_db;
+
+CREATE DATABASE rms_db;

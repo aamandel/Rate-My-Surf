@@ -7,8 +7,9 @@ router.get('/', (req, res) => {
     Review.findAll({
         attributes: [
             'id',
-            'review_url',
+            'body',
             'title',
+            'beach_id',
             'created_at',
             [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE review.id = vote.review_id)'), 'vote_count']
         ],
@@ -45,8 +46,9 @@ router.get('/:id', (req, res) => {
         },
         attributes: [
             'id',
-            'review_url',
+            'body',
             'title',
+            'beach_id',
             'created_at',
             [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE review.id = vote.review_id)'), 'vote_count']
         ],
@@ -82,10 +84,11 @@ router.get('/:id', (req, res) => {
 
 // create new review
 router.post('/', (req, res) => {
-    // expects {title: 'Taskmaster goes public!', review_url: 'https://taskmaster.com/press', user_id: 1}
+    // expects {title: 'Taskmaster goes public!', body: 'https://taskmaster.com/press', beach_id: 1, user_id: 1}
     Review.create({
         title: req.body.title,
-        review_url: req.body.review_url,
+        body: req.body.body,
+        beach_id: req.body.beach_id,
         user_id: req.body.user_id
     })
         .then(dbReviewData => res.json(dbReviewData))

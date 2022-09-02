@@ -1,0 +1,41 @@
+// 1. Import the initial variables
+@import "../../node_modules/bulma/sass/utilities/initial-variables";
+@import "../../node_modules/bulma/sass/utilities/functions";
+
+// 2. Set your own initial variables
+// Add a serif family
+$family-serif: "Merriweather", "Georgia", serif;
+
+// 3. Set the derived variables
+// Use the new pink as the primary color
+$primary: #5498FF;
+$family-primary: $family-serif;
+
+
+
+// 4. Setup your Custom Colors
+$secondary: #1650A8;
+$secondary-invert: findColorInvert($secondary);
+$tertiary: #3885F6;
+$tertiary-invert: findColorInvert($tertiary);
+$accentPrimary: #A87205;
+$accentPrimary-invert: findColorInvert($accentPrimary);
+$accentSecondary: #F5B638;
+$accentSecondary-invert: findColorInvert($accentSecondary);
+
+// 5. Add new color variables to the color map.
+@import "../../node_modules/bulma/sass/utilities/derived-variables";
+$addColors: (
+    "secondary":($secondary, $secondary-invert),
+    "tertiary": ($tertiary, $tertiary-invert),
+    "accentPrimary": ($accentPrimary, $accentPrimary-invert),
+    "accentSecondary": ($accentSecondary, $accentSecondary-invert)
+);
+$colors: map-merge($colors, $addColors);
+
+// 6. Import the rest of Bulma
+@import "../../node_modules/bulma/bulma.sass";
+
+.navbar-burger {
+    height: fit-content;
+}

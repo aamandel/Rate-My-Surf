@@ -3,6 +3,7 @@ const sequelize = require('../config/connection');
 
 // create our Review model
 class Review extends Model {
+    // define method for upvoting reviews
     static upvote(body, models) {
         return models.Vote.create({
             user_id: body.user_id,
@@ -43,9 +44,6 @@ Review.init(
         body: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                isURL: true
-            }
         },
         beach_id: {
             type: DataTypes.INTEGER,

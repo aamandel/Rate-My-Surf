@@ -1,0 +1,68 @@
+<section class="section" style="padding:0;">
+    <div class="container is-full" style="max-width: none;">
+        <div class="columns is-mobile" style="padding-left: 20px; padding-right: 20px;">
+            <!--Column one-->
+            <!--Secondary logo image-->
+            <div class="column is-one-fifth">
+                <div class="image is-256x256">
+                    <img src="/Assets/RMSLogo1.png" alt="">
+                </div>
+            </div>
+
+            <!--Column two-->
+            <!--TODO: Image carousel-->
+            <div class="column">
+                <div class="image is-16by9">
+                    <img src="https://drive.google.com/uc?export=view&id=1VZgJ3bekxNfSW0H814Dd0wLBz29f9yph" alt="">
+                </div>
+
+                <div class="content is-large has-text-centered">
+                    <h1>About</h1>
+                    <p>
+                        Rate My Surf is an online platform where surfers in Santa Cruz, Orange and Monterey Counties
+                        can discover beaches, leave reviews and view important weather and tide information.
+                    </p>
+                    <p>
+                        To begin, select a county from the drop down menu located on the navigation bar.
+                        Next, click one of the beaches which will appear on the left side of the page.
+                        This will bring you to one of the beach pages where you can write a review, like
+                        other people's reviews and view current weather and tide conditions.
+                    </p>
+                    <p>
+                        Happy Surfing!
+                    </p>
+                </div>
+
+            </div>
+
+            <!--Column three-->
+            <!--Show trending reviews-->
+            <div class="column is-one-fifth">
+
+                <h3 class="title">Trending Reviews:</h3>
+
+                {{#each reviews as |review|}}
+                <div class="card">
+                    <div class="card-content">
+                        <p class="title is-4">{{review.title}}</p>
+                        <div class="content">
+                            <p>{{review.body}}</p>
+                            <p class="content is-small">
+                                by {{review.user.username}} on
+                                {{review.created_at}}
+                            </p>
+                            <p class="content is-small">
+                                {{review.vote_count}} point(s)
+                                <a href="/review/{{id}}">{{review.comments.length}} comment(s)</a>
+                            </p>
+
+
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+    </div>
+</section>

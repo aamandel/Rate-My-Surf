@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rate My Surf</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://kit.fontawesome.com/a0641ce90f.js" crossorigin="anonymous"></script>
 </head>
 
 <!--Navbar-->
@@ -47,11 +48,14 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
-                    <a class="button is-rounded is-accentSecondary">
-                        <strong>Sign up</strong>
+                    <a class="button is-rounded is-accentSecondary" href="/signup">
+                        <strong>Signup</strong>
                     </a>
-                    <a class="button is-rounded is-accentSecondary">
-                        <strong>Log in</strong>
+                    <a class="button is-rounded is-accentSecondary" href="/login">
+                        <strong>Login</strong>
+                    </a>
+                    <a class="button is-rounded is-accentSecondary" id="logout">
+                        <strong>Logout</strong>
                     </a>
                 </div>
             </div>
@@ -65,7 +69,7 @@
             {{{ body }}}
         </main>
     </div>
-
+    <script src="/javascript/logout.js"></script>
 </body>
 
 </html>

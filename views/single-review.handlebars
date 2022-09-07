@@ -1,0 +1,72 @@
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-10 is-offset-1">
+                <div class="card">
+                    <div class="card-content">
+                        <p class="title is-4">{{review.title}}</p>
+                        <p class="subtitle is-6 has-text-grey-light" style="margin-bottom: 10px;">
+                            @{{review.user.username}}</p>
+                        <p>{{review.body}}</p>
+                        <div class="content has-text-grey-light is-size-7">
+                            <div>{{review.created_at}}</div>
+                            <div>
+                                {{review.vote_count}} point(s) |
+                                {{review.comments.length}} comment(s)
+                            </div>
+                            <div class="has-text-right">
+                                <button type="button" class="button is-primary is-rounded upvote-btn">
+                                    <span class="icon">
+                                        <i class="fa-solid fa-arrow-up"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--Comment section-->
+                {{#if loggedIn}}
+                <form style="margin-top: 30px;">
+                    <div>
+                        <textarea class="textarea" name="comment-body" placeholder="Enter Comment"></textarea>
+                    </div>
+
+                    <div style="padding: 10px;">
+                        <button class="button is-accentSecondary is-rounded comment-submit" type="submit">add
+                            comment</button>
+
+                    </div>
+                </form>
+                {{/if}}
+
+                <div class="comments">
+                    {{#each review.comments}}
+                    <div style="padding: 10px;">
+                        <section class="card">
+                            <div class="card-content">
+                                <p class="subtitle is-6 has-text-grey-light" style="margin-bottom: 10px;">
+                                    @{{user.username}}:</p>
+
+                                <p class="text">
+                                    {{comment_text}}
+                                </p>
+
+                                <div class="content has-text-grey-light is-size-7">{{created_at}}</div>
+
+                            </div>
+                        </section>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Load scripts to process upvoting and adding comments-->
+{{#if loggedIn}}
+<script src="/javascript/comment.js"></script>
+<script src="/javascript/upvote.js"></script>
+{{/if}}

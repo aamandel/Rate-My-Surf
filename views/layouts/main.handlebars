@@ -48,15 +48,19 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
+
+                    {{#if loggedIn}}
+                    <a class="button is-rounded is-accentSecondary" id="logout">
+                        <strong>Logout</strong>
+                    </a>
+                    {{else}}
                     <a class="button is-rounded is-accentSecondary" href="/signup">
                         <strong>Signup</strong>
                     </a>
                     <a class="button is-rounded is-accentSecondary" href="/login">
                         <strong>Login</strong>
                     </a>
-                    <a class="button is-rounded is-accentSecondary" id="logout">
-                        <strong>Logout</strong>
-                    </a>
+                    {{/if}}
                 </div>
             </div>
         </div>
@@ -69,7 +73,9 @@
             {{{ body }}}
         </main>
     </div>
+    {{#if loggedIn}}
     <script src="/javascript/logout.js"></script>
+    {{/if}}
 </body>
 
 </html>

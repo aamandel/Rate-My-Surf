@@ -1,0 +1,29 @@
+<!--Page for viewing a specific beach and the reviews for that beach-->
+<!--Logged in users can add new reviews-->
+<section class="section">
+    <div class="container">
+        <div class="title is-size-1-mobile">
+            <h1>{{beach.name}}</h1>
+        </div>
+        {{#each beach.reviews as |review|}}
+        <div class="card">
+            <div class="card-content">
+                <p class="title is-4">{{review.title}}</p>
+                <div class="content">
+                    <p>{{review.body}}</p>
+                    <p class="content is-small">
+                        by {{review.user.username}} on
+                        {{review.created_at}}
+                    </p>
+                    <p class="content is-small">
+                        {{review.vote_count}} point(s)
+                        <a href="/review/{{id}}">{{review.comments.length}} comment(s)</a>
+                    </p>
+
+
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</section>

@@ -100,13 +100,18 @@ router.post('/', (req, res) => {
 
 // upvote a review: PUT /api/reviews/upvote
 router.put('/upvote', (req, res) => {
-    // custom static method created in models/review.js
-    Review.upvote(req.body, { Vote })
-        .then(updatedReviewData => res.json(updatedReviewData))
-        .catch(err => {
-            console.log(err);
-            res.status(400).json(err);
-        });
+    // first make sure the user is logged in
+    if (req.session.loggedIn) {
+        // pass session id to custom static method created in models/review.js
+        Review.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comment, User })
+            .then(updatedReviewData => res.json(updatedReviewData))
+            .catch(err => {
+                console.log(err);
+                res.status(409).json(err);
+            });
+    } else {
+        res.status(400).json("Not Logged In");
+    }
 });
 
 // update review title

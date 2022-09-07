@@ -13,16 +13,21 @@ router.get('/', (req, res) => {
 
 // create new comment
 router.post('/', (req, res) => {
-    Comment.create({
-        comment_text: req.body.comment_text,
-        user_id: req.body.user_id,
-        post_id: req.body.post_id
-    })
-        .then(dbCommentData => res.json(dbCommentData))
-        .catch(err => {
-            console.log(err);
-            res.status(400).json(err);
-        });
+    if (req.session.loggedIn) {
+        Comment.create({
+            comment_text: req.body.comment_text,
+            user_id: req.session.user_id,
+            review_id: req.body.review_id
+        })
+            .then(dbCommentData => res.json(dbCommentData))
+            .catch(err => {
+                console.log(err);
+                res.status(400).json(err);
+            });
+    } else {
+        res.status(401).json("Not logged in");
+    }
+
 });
 
 // delete comment by id

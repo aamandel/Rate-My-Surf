@@ -109,7 +109,9 @@ router.post('/login', (req, res) => {
 // Logout: POST /api/users/logout
 router.post('/logout', (req, res) => {
     if (req.session.loggedIn) {
+        console.log("session destroyed");
         req.session.destroy(() => {
+
             res.status(204).end();
         });
     }

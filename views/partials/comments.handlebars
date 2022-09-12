@@ -1,0 +1,19 @@
+<div class="comments">
+    {{#each this}}
+    <div style="padding: 10px;">
+        <section class="card">
+            <div class="card-content">
+                <p class="subtitle is-6 has-text-grey-light" style="margin-bottom: 10px;">
+                    @{{user.username}}:</p>
+
+                <p class="text">
+                    {{comment_text}}
+                </p>
+
+                <div class="content has-text-grey-light is-size-7">{{format_date created_at}}</div>
+
+            </div>
+        </section>
+    </div>
+    {{/each}}
+</div>

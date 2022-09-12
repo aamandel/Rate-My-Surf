@@ -42,24 +42,7 @@
                 <h3 class="title">Trending Reviews:</h3>
 
                 {{#each reviews as |review|}}
-                <div class="card">
-                    <div class="card-content">
-                        <p class="title is-4">{{review.title}}</p>
-                        <div class="content">
-                            <p>{{review.body}}</p>
-                            <p class="content is-small">
-                                by {{review.user.username}} on
-                                {{review.created_at}}
-                            </p>
-                            <p class="content is-small">
-                                {{review.vote_count}} point(s)
-                                <a href="/beach/{{review.beach_id}}">{{review.comments.length}} comment(s)</a>
-                            </p>
-
-
-                        </div>
-                    </div>
-                </div>
+                {{> review-info review }}
                 {{/each}}
             </div>
         </div>

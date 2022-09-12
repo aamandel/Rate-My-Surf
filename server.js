@@ -6,6 +6,8 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const helpers = require('./utils/helpers');
+
 // use express middleware
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json());
@@ -27,7 +29,7 @@ app.use(session(sess));
 
 //express handlebars setup
 const exphbs = require('express-handlebars');
-const hbs = exphbs.create({});
+const hbs = exphbs.create({ helpers });
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 

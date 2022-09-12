@@ -16,8 +16,8 @@
                         {{review.created_at}}
                     </p>
                     <p class="content is-small">
-                        {{review.vote_count}} point(s)
-                        <a href="/review/{{id}}">{{review.comments.length}} comment(s)</a>
+                        {{format_plural "point" review.vote_count}} |
+                        <a href="/review/{{id}}">{{format_plural "comment" review.comments.length}}</a>
                     </p>
 
 

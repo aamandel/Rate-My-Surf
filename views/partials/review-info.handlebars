@@ -1,0 +1,18 @@
+<div class="review">
+    <div class="card">
+        <div class="card-content">
+            <p class="title is-4">{{title}}</p>
+            <p class="subtitle is-6 has-text-grey-light" style="margin-bottom: 10px;">
+                @{{user.username}}</p>
+            <p>{{body}}</p>
+            <div class="content has-text-grey-light is-size-7">
+                <div>{{format_date created_at}}</div>
+                <div>
+                    {{format_plural "point" vote_count}} |
+                    <a href="/review/{{id}}">{{format_plural "comment" comments.length}}</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

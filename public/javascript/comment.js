@@ -8,7 +8,6 @@ let commentFormHandler = async (event) => {
     const review_id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];
-    console.log(review_id);
 
     if (comment_text) {
         const response = await fetch('/api/comments', {

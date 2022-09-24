@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
+const apiFunctions = require('../utils/apiFunctions');
 const { Review, User, Comment, Beach } = require('../models');
 
 router.get('/', (req, res) => {
@@ -67,7 +68,9 @@ router.get('/beach/:id', (req, res) => {
         },
         attributes: [
             'id',
-            'name'
+            'name',
+            'longitude',
+            'latitude'
         ],
         include: [
             {
@@ -106,9 +109,12 @@ router.get('/beach/:id', (req, res) => {
 
             // serialize the data
             const beach = dbBeachData.get({ plain: true });
-
+            apiFunctions.load_api(beach.longitude, beach.latitude);
             // pass data to template
-            res.render('single-beach', { beach });
+            res.render('single-beach', {
+                beach,
+                loggedIn: req.session.loggedIn
+            });
         })
         .catch(err => {
             console.log(err);

@@ -2,28 +2,42 @@
 <!--Logged in users can add new reviews-->
 <section class="section">
     <div class="container">
-        <div class="title is-size-1-mobile">
+        <!--Beach Name-->
+        <div class="title is-1">
             <h1>{{beach.name}}</h1>
         </div>
-        {{#each beach.reviews as |review|}}
-        <div class="card">
-            <div class="card-content">
-                <p class="title is-4">{{review.title}}</p>
-                <div class="content">
-                    <p>{{review.body}}</p>
-                    <p class="content is-small">
-                        by {{review.user.username}} on
-                        {{review.created_at}}
-                    </p>
-                    <p class="content is-small">
-                        {{format_plural "point" review.vote_count}} |
-                        <a href="/review/{{id}}">{{format_plural "comment" review.comments.length}}</a>
-                    </p>
-
-
-                </div>
-            </div>
+        <!--Add Review Section-->
+        {{#if loggedIn}}
+        <div class="title is-4" style="margin-bottom: 10px;">
+            <h1>Add New Review:</h1>
         </div>
+        <div class="field">
+            <p class="control">
+                <input class="input" type="text" id="review-title" placeholder="Title">
+            </p>
+        </div>
+        <form style="margin-top: 10px;">
+            <div>
+                <textarea class="textarea" name="review-body" placeholder="Enter Review"></textarea>
+            </div>
+
+            <div style="padding: 10px;">
+                <button class="button is-accentSecondary is-rounded review-submit" type="submit">add
+                    review</button>
+            </div>
+        </form>
+        {{/if}}
+        <!--View Reviews Section-->
+        <div class="title has-text-centered is-3" style="margin-bottom: 10px;">
+            <h1>Reviews:</h1>
+        </div>
+        {{#each beach.reviews as |review|}}
+        {{> review-info review }}
         {{/each}}
     </div>
 </section>
+
+<!--Load scripts to process adding reviews-->
+{{#if loggedIn}}
+<script src="/javascript/review.js"></script>
+{{/if}}

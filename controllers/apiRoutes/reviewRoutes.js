@@ -84,18 +84,22 @@ router.get('/:id', (req, res) => {
 
 // create new review
 router.post('/', (req, res) => {
-    // expects {title: 'Taskmaster goes public!', body: 'https://taskmaster.com/press', beach_id: 1, user_id: 1}
-    Review.create({
-        title: req.body.title,
-        body: req.body.body,
-        beach_id: req.body.beach_id,
-        user_id: req.body.user_id
-    })
-        .then(dbReviewData => res.json(dbReviewData))
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
+    // expects {title: 'Great Waves!', body: 'Had an excellent trip', beach_id: 1}
+    if (req.session.loggedIn) {
+        Review.create({
+            title: req.body.title,
+            body: req.body.body,
+            beach_id: req.body.beach_id,
+            user_id: req.session.user_id
+        })
+            .then(dbReviewData => res.json(dbReviewData))
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            });
+    } else {
+        res.status(401).json("Not logged in");
+    }
 });
 
 // upvote a review: PUT /api/reviews/upvote

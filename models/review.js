@@ -68,69 +68,6 @@ class Review extends Model {
         });
     }
 }
-/*if (alreadyExists) {
-    console.log('----------------------------------------------------- wtf');
-    return Vote.destroy({
-        where: {
-            user_id: body.user_id,
-            review_id: body.review_id
-        }
-    })
-        .then(() => {
-            return Review.findOne({
-                where: {
-                    id: body.review_id
-                },
-                attributes: [
-                    'id',
-                    'title',
-                    'body',
-                    'beach_id',
-                    'user_id',
-                    'created_at',
-                    [
-                        sequelize.literal('(SELECT COUNT(*) FROM vote WHERE review.id = vote.review_id)'),
-                        'vote_count'
-                    ]
-                ]
-            });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-} else {
-    console.log('hell0??? ---------------------------------');
-    return models.Vote.create({
-        user_id: body.user_id,
-        review_id: body.review_id
-    })
-        .then(() => {
-            return Review.findOne({
-                where: {
-                    id: body.review_id
-                },
-                attributes: [
-                    'id',
-                    'title',
-                    'body',
-                    'beach_id',
-                    'user_id',
-                    'created_at',
-                    [
-                        sequelize.literal('(SELECT COUNT(*) FROM vote WHERE review.id = vote.review_id)'),
-                        'vote_count'
-                    ]
-                ]
-            })
-                .then(data => {
-                    console.log('--------------------------');
-                    console.log(data);
-                });
-        });
-}
-
-}
-}*/
 
 // create fields/columns for Review model
 Review.init(

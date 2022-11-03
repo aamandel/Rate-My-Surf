@@ -37,6 +37,7 @@ app.set('view engine', 'handlebars');
 app.use(routes);
 
 // turn on connection to db and server
-sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => console.log('Now listening'));
-});
+sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
+    .then(sequelize.sync({ force: false }).then(() => {
+        app.listen(PORT, () => console.log('Now listening'));
+    }));

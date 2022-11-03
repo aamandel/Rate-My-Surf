@@ -1,28 +1,28 @@
-const Beach = require('./beach')
-const County = require('./county')
+const County = require('./county');
 const User = require('./user');
 const Review = require('./review');
+const Beach = require('./beach');
 const Vote = require('./vote');
 const Comment = require('./comment');
+const Weather = require('./weather');
 
 // create associations
-
 // counties have many beaches
 County.hasMany(Beach, {
     foreignKey: 'county_id'
-})
+});
 // beaches belong to one county
 Beach.belongsTo(County, {
     foreignKey: 'county_id'
-})
+});
 // beaches have many reviews
 Beach.hasMany(Review, {
     foreignKey: 'beach_id'
-})
+});
 // reviews belong to one beach
 Review.belongsTo(Beach, {
     foreignKey: 'beach_id'
-})
+});
 // users have many reviews
 User.hasMany(Review, {
     foreignKey: 'user_id'
@@ -85,4 +85,4 @@ Review.hasMany(Comment, {
     foreignKey: 'review_id'
 });
 
-module.exports = { Beach, County, User, Review, Vote, Comment };
+module.exports = { Review, Beach, County, User, Vote, Comment, Weather };

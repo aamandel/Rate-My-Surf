@@ -4,9 +4,12 @@
             <div>
                 <a href="/review/{{id}}" class="title is-4">{{title}}</a>
             </div>
-
+            {{#if beach}}
+            <a href="/beach/{{beach.id}}" class="is-6">{{beach.name}} Beach</a>
+            {{/if}}
             <p class="subtitle is-6 has-text-grey-light" style="margin-bottom: 10px;">
                 @{{user.username}}</p>
+
             <p>{{body}}</p>
             <div class="content has-text-grey-light is-size-7">
                 <div>{{format_date created_at}}</div>

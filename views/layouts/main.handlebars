@@ -28,27 +28,23 @@
         <div class="navbar-start">
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
-                    Counties
+                    Select a county
                 </a>
 
                 <div class="navbar-dropdown">
-                    <a class="navbar-item">
-                        County1
+                    {{#each counties as |county|}}
+                    <a href="/county/{{county.id}}" class="navbar-item">
+                        {{county.name}}
                     </a>
-                    <a class="navbar-item">
-                        County2
-                    </a>
-                    <a class="navbar-item">
-                        County3
-                    </a>
+                    {{/each}}
                 </div>
             </div>
         </div>
 
         <div class="navbar-end">
+
             <div class="navbar-item">
                 <div class="buttons">
-
                     {{#if loggedIn}}
                     <a class="button is-rounded is-accentSecondary" id="logout">
                         <strong>Logout</strong>

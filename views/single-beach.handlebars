@@ -6,6 +6,32 @@
         <div class="title is-1">
             <h1>{{beach.name}}</h1>
         </div>
+        <!--Weather Data Section-->
+        <div class="card has-background-dark">
+            <div class="card-content has-text-white-ter">
+                <div class="content">
+                    As of: {{apiData.tide.time}}
+                </div>
+                <div class="content">
+                    Sea Level: {{apiData.tide.sg}} meters
+                </div>
+                <div class="content">
+                    Swell Direction: {{apiData.swellDirection}}°
+                </div>
+                <div class="content">
+                    Swell Height: {{apiData.swellHeight}} meters
+                </div>
+                <div class="content">
+                    Swell Period: {{apiData.swellPeriod}} seconds
+                </div>
+                <div class="content">
+                    Water Temperature: {{apiData.waterTemp}} °C
+                </div>
+                <div class="content">
+                    Wind Direction: {{apiData.windDirection}}° (0° is north)
+                </div>
+            </div>
+        </div>
         <!--Add Review Section-->
         {{#if loggedIn}}
         <div class="title is-4" style="margin-bottom: 10px;">

@@ -1,11 +1,12 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const apiFunctions = require('../utils/apiFunctions');
-const { Review, User, Comment, Beach } = require('../models');
+const apiFunctions = require('../utils/apiFunctions.js');
+
+const { Review, User, Comment, Beach, County } = require('../models');
 
 router.get('/', (req, res) => {
-    console.log(req.session);
     Review.findAll({
+        limit: 4,
         attributes: [
             'id',
             'body',
@@ -26,16 +27,38 @@ router.get('/', (req, res) => {
             {
                 model: User,
                 attributes: ['username']
+            },
+            {
+                model: Beach,
+                attributes: ['id', 'name'],
             }
-        ]
+        ],
+        subQuery: true,
+        order: sequelize.literal('(SELECT COUNT(*) FROM vote WHERE review.id = vote.review_id) DESC'),
     })
         .then(dbReviewData => {
             // pass serialized array of review objects into the homepage template
             const reviews = dbReviewData.map(review => review.get({ plain: true }));
-            res.render('homepage', {
-                reviews,
-                loggedIn: req.session.loggedIn
-            });
+            County.findAll({
+                attributes: [
+                    'id',
+                    'name'
+                ]
+            }).then(dbCountyData => {
+                // pass serialized array of county objects into the homepage template
+                const counties = dbCountyData.map(county => county.get({ plain: true }));
+                // render homepage template
+                res.render('homepage', {
+                    reviews,
+                    counties,
+                    loggedIn: req.session.loggedIn
+                });
+            })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json(err);
+                })
+
         })
         .catch(err => {
             console.log(err);
@@ -49,7 +72,21 @@ router.get('/login', (req, res) => {
         return;
     }
 
-    res.render('login');
+    // retrieve county data for navbar
+    County.findAll({
+        attributes: [
+            'id',
+            'name'
+        ]
+    }).then(dbCountyData => {
+        // pass serialized array of county objects into the template
+        const counties = dbCountyData.map(county => county.get({ plain: true }));
+        res.render('login', {
+            counties
+        });
+    });
+
+
 });
 
 router.get('/signup', (req, res) => {
@@ -57,8 +94,61 @@ router.get('/signup', (req, res) => {
         res.redirect('/');
         return;
     }
+    // retrieve county data for navbar
+    County.findAll({
+        attributes: [
+            'id',
+            'name'
+        ]
+    }).then(dbCountyData => {
+        // pass serialized array of county objects into the template
+        const counties = dbCountyData.map(county => county.get({ plain: true }));
+        res.render('signup', {
+            counties
+        });
+    });
 
-    res.render('signup');
+});
+
+router.get('/county/:id', (req, res) => {
+    County.findOne({
+        where: {
+            id: req.params.id
+        },
+        attributes: [
+            'id',
+            'name',
+        ],
+        include: [
+            {
+                model: Beach,
+                attributes: [
+                    'id',
+                    'name'
+                ]
+            }
+        ]
+    }).then(dbCountyData => {
+        // serialize the data for this county
+        const thisCounty = dbCountyData.get({ plain: true });
+        // retrieve additional county data for navbar
+        County.findAll({
+            attributes: [
+                'id',
+                'name'
+            ]
+        }).then(dbCountiesData => {
+            // serialize array of county objects
+            const counties = dbCountiesData.map(county => county.get({ plain: true }));
+            // pass data to template
+            res.render('single-county', {
+                thisCounty,
+                counties,
+                loggedIn: req.session.loggedIn
+            });
+        });
+    });
+
 });
 
 router.get('/beach/:id', (req, res) => {
@@ -82,7 +172,8 @@ router.get('/beach/:id', (req, res) => {
                     'beach_id',
                     'user_id',
                     'created_at',
-                    [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE id = vote.review_id)'), 'vote_count']
+                    [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE reviews.id = vote.review_id)'), 'vote_count']
+
                 ],
                 include: [
                     {
@@ -109,12 +200,29 @@ router.get('/beach/:id', (req, res) => {
 
             // serialize the data
             const beach = dbBeachData.get({ plain: true });
-            apiFunctions.load_api(beach.longitude, beach.latitude);
-            // pass data to template
-            res.render('single-beach', {
-                beach,
-                loggedIn: req.session.loggedIn
-            });
+            apiFunctions.loadData(beach.longitude, beach.latitude, beach.id)
+                .then(apiData => {
+                    console.log("api data retrieved:");
+                    console.log(apiData);
+
+                    // retrieve county data for navbar
+                    County.findAll({
+                        attributes: [
+                            'id',
+                            'name'
+                        ]
+                    }).then(dbCountyData => {
+                        // serialize array of county objects
+                        const counties = dbCountyData.map(county => county.get({ plain: true }));
+                        // pass data to template
+                        res.render('single-beach', {
+                            beach,
+                            apiData,
+                            counties,
+                            loggedIn: req.session.loggedIn
+                        });
+                    });
+                });
         })
         .catch(err => {
             console.log(err);
@@ -157,14 +265,26 @@ router.get('/review/:id', (req, res) => {
                 return;
             }
 
-            // serialize the data
+            // serialize the review data
             const review = dbReviewData.get({ plain: true });
 
-            // pass data to template
-            res.render('single-review', {
-                review,
-                loggedIn: req.session.loggedIn
+            // retrieve county data for navbar
+            County.findAll({
+                attributes: [
+                    'id',
+                    'name'
+                ]
+            }).then(dbCountyData => {
+                // seriealize the county data
+                const counties = dbCountyData.map(county => county.get({ plain: true }));
+                // pass data to template
+                res.render('single-review', {
+                    review,
+                    counties,
+                    loggedIn: req.session.loggedIn
+                });
             });
+
         })
         .catch(err => {
             console.log(err);

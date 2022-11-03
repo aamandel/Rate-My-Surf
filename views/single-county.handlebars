@@ -1,0 +1,13 @@
+<!--County page for viewing beaches in a that county-->
+<section class="section">
+    <div class="container">
+        <!--Beach Name-->
+        <div class="title is-1">
+            <h1>{{thisCounty.name}} County</h1>
+
+        </div>
+        {{#each thisCounty.beaches as |beach|}}
+        {{> beach-info beach}}
+        {{/each}}
+    </div>
+</section>

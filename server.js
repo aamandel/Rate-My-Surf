@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3001;
 const helpers = require('./utils/helpers');
 
 // use express middleware
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -32,6 +32,7 @@ const exphbs = require('express-handlebars');
 const hbs = exphbs.create({ helpers });
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
+app.set('views', __dirname + '/views');
 
 // turn on routes
 app.use(routes);
@@ -39,5 +40,5 @@ app.use(routes);
 // turn on connection to db and server
 sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
     .then(sequelize.sync({ force: false }).then(() => {
-        app.listen(PORT, () => console.log('Now listening'));
+        app.listen(PORT, () => console.log('Now listening on port:' + PORT));
     }));

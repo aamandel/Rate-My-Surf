@@ -7,7 +7,7 @@ require('dotenv').config();
 // create connection to rms database
 let sequelize;
 if (process.env.JAWSDB_URL) {
-    sequelize = new Sequelize(process.env.JAWSDB_URL, {
+    sequelize = new Sequelize(process.env.JAWSDB_URL, process.env.JAWSDB_USER, process.env.JAWSDB_PW, {
         dialectOptions: {
             multipleStatements: true
         }

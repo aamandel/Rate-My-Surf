@@ -8,6 +8,7 @@ require('dotenv').config();
 let sequelize;
 if (process.env.JAWSDB_URL) {
     sequelize = new Sequelize(process.env.JAWSDB_URL, process.env.JAWSDB_USER, process.env.JAWSDB_PW, {
+        dialect: 'mysql',
         dialectOptions: {
             multipleStatements: true
         }

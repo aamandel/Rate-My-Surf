@@ -15,7 +15,7 @@ const seedsQuery = fs.readFileSync("db/seeds.sql", {
 // if JawsDB is available
 if (process.env.JAWSDB_URL) {
     // use the database
-    sequelize.query('USE' + process.env.JAWSDB_DB).then(() => {
+    sequelize.query('USE ' + process.env.JAWSDB_DB).then(() => {
         // then sync the models using sequelize
         sequelize.sync({ force: true }).then(() => {
             // then seed the datase
